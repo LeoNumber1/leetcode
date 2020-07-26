@@ -10,10 +10,17 @@ import (
 func main() {
 	v := 1000000000
 	//v = 10
-	//v = 9
+	v = 9
+	//v = 0
 	t := 0.00001
 	//t = 0.1
 	//t = 0.21
+	//t = 0.21
+
+	//fmt.Println("暴力破解法计算的值 =", sqrt(v, t))        //暴力破解法
+	//fmt.Println("二分法计算的值 =", sqrtDichotomy(v, t)) //二分法
+	fmt.Println("", sqrt3(float64(v), t)) //
+	return
 
 	wg := new(sync.WaitGroup)
 	wg.Add(3)
@@ -42,6 +49,9 @@ func main() {
 }
 
 func sqrt(v int, t float64) float64 {
+	if v <= 0 {
+		return 0
+	}
 	return sqrt2(0, 1, float64(v), t)
 }
 
@@ -62,6 +72,9 @@ func sqrt2(start float64, deepth float64, v float64, t float64) float64 {
 
 //二分法
 func sqrtDichotomy(v int, t float64) float64 {
+	if v < 0 {
+		return 0
+	}
 	vFloat := float64(v)
 	var left, right float64 = 0, vFloat
 	for left < right {
@@ -76,4 +89,12 @@ func sqrtDichotomy(v int, t float64) float64 {
 		}
 	}
 	return 0
+}
+
+func sqrt3(F, t float64) float64 {
+	x := 1.0
+	for math.Abs(x*x-F) > t {
+		x -= (x*x - F) / (2 * x)
+	}
+	return x
 }
