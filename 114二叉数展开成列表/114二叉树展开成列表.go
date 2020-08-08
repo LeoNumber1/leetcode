@@ -48,3 +48,34 @@ func preorderTraversal(root *TreeNode) []*TreeNode {
 	}
 	return list
 }
+
+func flatten(root *TreeNode) {
+	res := new([]int)
+	node := new(TreeNode)
+	InBegin(root, res)
+
+	for i := 0; i < len(*res); i++ {
+		Insert(node, (*res)[i])
+	}
+	root = node.Right
+}
+
+//插入
+func Insert(node *TreeNode, v int) {
+	if node.Right != nil {
+		Insert(node.Right, v)
+	} else {
+		node.Right = &TreeNode{v, nil, nil}
+	}
+}
+
+//先序遍历
+func InBegin(node *TreeNode, result *[]int) {
+	*result = append(*result, node.Val)
+	if node.Left != nil {
+		InBegin(node.Left, result)
+	}
+	if node.Right != nil {
+		InBegin(node.Right, result)
+	}
+}
