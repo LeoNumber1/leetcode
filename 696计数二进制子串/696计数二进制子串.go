@@ -4,10 +4,12 @@ import "fmt"
 
 func main() {
 	s := "00110011"
-	//s = "10101"
-	//fmt.Println(countBinarySubstrings(s))
-	fmt.Println(countBinarySubstringsOfficial(s))
-	fmt.Println(countBinarySubstringsOfficial1(s))
+	s = "10101"
+	s = "10"
+	s = "000111000"
+	fmt.Println(countBinarySubstrings1(s))
+	//fmt.Println(countBinarySubstringsOfficial(s))
+	//fmt.Println(countBinarySubstringsOfficial1(s))
 }
 
 func countBinarySubstrings(s string) int {
@@ -15,8 +17,11 @@ func countBinarySubstrings(s string) int {
 	for j := i + 1; i < len(s) && j < len(s); i, j = i+1, j+1 {
 		if s[i] != s[j] {
 			count++
+			var si, sj = s[i], s[j]
 			for x, y := i-1, j+1; x >= 0 && y < len(s); x, y = x-1, y+1 {
-				if s[x] == s[i] && s[y] == s[j] {
+				i = y - 2
+				j = i + 1
+				if s[x] == si && s[y] == sj {
 					count++
 				} else {
 					break
@@ -70,4 +75,26 @@ func countBinarySubstringsOfficial1(s string) int {
 	}
 
 	return ans
+}
+
+func countBinarySubstrings1(s string) int {
+	if len(s) <= 1 {
+		return 0
+	}
+	lastChar := s[0]
+	lastNum, num := 0, 1
+	count := 0
+	for i := 1; i < len(s); i++ {
+		if s[i] == lastChar {
+			num++
+		} else {
+			//fmt.Println(i,lastChar,lastNum,num)
+			count += min(lastNum, num)
+			lastChar = s[i]
+			lastNum = num
+			num = 1
+		}
+	}
+	count += min(lastNum, num)
+	return count
 }
