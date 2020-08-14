@@ -21,10 +21,10 @@ func main() {
 
 func isValid(s string) bool {
 	n := len(s)
-	if n%2 == 1 {
+	if n%2 == 1 { //如果是奇数，返回false
 		return false
 	}
-	m := map[string]string{
+	m := map[string]string{ //定义括号对的map
 		"(": ")",
 		"[": "]",
 		"{": "}",
@@ -32,13 +32,13 @@ func isValid(s string) bool {
 
 	arr := make([]string, 0)
 	for i := 0; i < n; i++ {
-		if len(arr) > len(s)/2 {
+		if len(arr) > len(s)/2 { //如果已经遍历了一半，arr还不为空，则直接false
 			return false
 		}
 
-		if _, ok := m[string(s[i])]; ok {
+		if _, ok := m[string(s[i])]; ok { //如果是左括号，则加入arr
 			arr = append(arr, string(s[i]))
-		} else {
+		} else { //不是左括号就去arr里的最后一个匹配，匹配成功了就删去arr里的最后一个，匹配不成功了直接返回false
 			if len(arr) > 0 {
 				if string(s[i]) != m[arr[len(arr)-1]] {
 					return false
