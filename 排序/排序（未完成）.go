@@ -7,9 +7,10 @@ func main() {
 		3, 5, 4, 2, 1,
 		//23, 46, 0, 8, 11, 18,
 	}
-	fmt.Println(BubbleSort(arr))
-	fmt.Println(SelectionSort(arr))
-	fmt.Println(InsertSort(arr))
+	//fmt.Println(BubbleSort(arr))
+	//fmt.Println(SelectionSort(arr))
+	//fmt.Println(InsertSort(arr))
+	fmt.Println(QuickSort(arr))
 }
 
 //冒泡排序
@@ -63,15 +64,37 @@ func QuickSort(arr []int) []int {
 		return arr
 	}
 
-	tmp := arr[0]
-	low, high := 0, len(arr)-1
-	for low <= high {
-		if arr[high] > tmp {
-			high--
-			continue
-		} else {
-			arr[low] = arr[high]
+	var f func(arr []int, low, high int)
+
+	f = func(arr []int, low, high int) {
+		if low < high {
+			i, j := low, high
+			key := arr[(low+high)/2]
+			for i <= j {
+				for arr[i] < key {
+					i++
+				}
+				for arr[j] > key {
+					j--
+				}
+				if i <= j {
+					arr[i], arr[j] = arr[j], arr[i]
+					i++
+					j--
+				}
+			}
+
+			if low < j {
+				f(arr, low, j)
+			}
+			if high > i {
+				f(arr, i, high)
+			}
 		}
+
+		return
 	}
+	f(arr, 0, len(arr)-1)
+
 	return arr
 }
