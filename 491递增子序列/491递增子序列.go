@@ -10,57 +10,7 @@ func main() {
 		4, 6, 7, 7,
 	}
 
-	//fmt.Println(findSubsequences(nums))
 	fmt.Println(findSubsequencesOfficial2(nums))
-}
-
-func findSubsequences(nums []int) [][]int {
-	if len(nums) < 2 {
-		return [][]int{nums}
-	}
-	ret := make([][]int, 0)
-	for i := 0; i < len(nums); i++ {
-		tmp := make([]int, 0)
-		tmp = append(tmp, nums[i])
-		for j := i + 1; j < len(nums); j++ {
-			if nums[j] >= nums[i] {
-				if !find(ret, []int{nums[i], nums[j]}) {
-					ret = append(ret, []int{nums[i], nums[j]})
-					//tmp = append(tmp, []int{nums[i], nums[j]})
-				}
-				tmp = append(tmp, nums[j])
-				//} else {
-				//	if !find(ret, []int{nums[i], nums[j]}) {
-				//		ret = append(ret, []int{nums[j], nums[i]})
-				//		tmp = append(nums[j], tmp)
-				//		//tmp = append(tmp, []int{nums[j], nums[i]})
-				//	}
-			}
-			if len(tmp) > 1 && !find(ret, tmp) {
-				ret = append(ret, tmp)
-			}
-		}
-	}
-
-	return ret
-}
-
-func find(ret [][]int, target []int) bool {
-	for _, v := range ret {
-		if len(v) != len(target) {
-			continue
-		}
-		for kt, vt := range target {
-			if v[kt] != vt {
-				break
-			} else {
-				if kt == len(target)-1 {
-					return true
-				}
-			}
-		}
-	}
-	return false
 }
 
 var (
