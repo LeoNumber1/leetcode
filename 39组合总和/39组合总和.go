@@ -2,21 +2,24 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"time"
 )
 
 func main() {
 	candidates := []int{
-		2, 3, 6, 7,
-		//2, 3, 5,
+		//2, 3, 6, 7,
+		2, 3, 5,
 	}
 	target := 7
 	//target = 8
 
-	//t := time.Now()
-	//fmt.Println(combinationSum(candidates, target), time.Since(t))
+	t := time.Now()
+	fmt.Println(combinationSum(candidates, target), time.Since(t))
 	to := time.Now()
 	fmt.Println(combinationSumOfficial(candidates, target), time.Since(to))
+	t1 := time.Now()
+	fmt.Println(combinationSum1(candidates, target), time.Since(t1))
 }
 
 func combinationSum(candidates []int, target int) [][]int {
@@ -68,4 +71,44 @@ func combinationSumOfficial(candidates []int, target int) (ans [][]int) {
 	}
 	dfs(target, 0)
 	return
+}
+
+var result [][]int
+var curSel []int
+
+func combinationSum1(candidates []int, target int) [][]int {
+	sort.Ints(candidates)
+	result = make([][]int, 0)
+	curSel = make([]int, 0)
+	DFS(target, candidates)
+	return result
+}
+
+func DFS(target int, candidates []int) int {
+	if getSum(curSel) == target {
+		cCurSel := make([]int, len(curSel))
+		copy(cCurSel, curSel)
+		result = append(result, cCurSel)
+		return 0
+	} else if getSum(curSel) > target {
+		return -1
+	} else { ////主要看这里用0代表相同，-1代表已经超过了当前target，1则表示还能继续加
+		for i := 0; i < len(candidates); i++ {
+			curSel = append(curSel, candidates[i])
+			temp := DFS(target, candidates[i:])
+			curSel = curSel[:len(curSel)-1]
+			if temp <= 0 {
+				break
+			}
+		}
+	}
+	return 1
+}
+
+func getSum(nums []int) int {
+	sum := 0
+	for i := 0; i < len(nums); i++ {
+		sum += nums[i]
+	}
+	return sum
 }
