@@ -48,6 +48,7 @@ func lengthOfLongestSubstring(s string) int {
 	return maxLenth
 }
 
+//12 ms	2.8 MB
 func lengthOfLongestSubstringOfficial(s string) int {
 	// 哈希集合，记录每个字符是否出现过
 	m := map[byte]int{}
