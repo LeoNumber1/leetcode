@@ -7,10 +7,11 @@ import (
 )
 
 func main() {
-	nums := []int{1, 1, 2, 2}
+	nums := []int{1, 3, 3, 2, 2}
 
-	//fmt.Println(permuteUnique(nums))
-	fmt.Println(permuteUniqueOfficial(nums))
+	fmt.Println(len(permuteUnique(nums)))
+	fmt.Println(len(permuteUnique1(nums)))
+	fmt.Println(len(permuteUniqueOfficial(nums)))
 }
 
 //188 ms-5.12%	8.6 MB-5.03%
@@ -49,6 +50,55 @@ func permuteUnique(nums []int) [][]int {
 		}
 	}
 	dfs(0, []int{})
+	return ans
+}
+
+//这个是插入法的进阶，但是太复杂了，搞了一半没搞出来，以后有时间再说
+func permuteUnique1(nums []int) [][]int {
+	var ans [][]int
+	n := len(nums)
+	if n == 0 {
+		return ans
+	} else if n == 1 {
+		return append(ans, nums)
+	}
+	sort.Ints(nums)
+	ans = [][]int{
+		{nums[0]},
+	}
+
+	for k := 1; k < n; k++ {
+		num := nums[k]
+		ansLen := len(ans)
+		for i := 0; i < ansLen; i++ {
+			var index int
+			if nums[k] == nums[k-1] {
+				index = i
+			}
+			for j := index; j <= len(ans[i]); j++ {
+				step := 0 //跨越步长，即后面有几个同样的数字
+				tmp := []int{}
+				if j == 0 {
+					tmp = append(append(tmp, num), ans[i]...)
+				} else {
+					t := make([]int, len(ans[i][:j]))
+					copy(t, ans[i][:j])
+					tmp = append(append(t, num), ans[i][j:]...)
+				}
+				for z := j; z < len(ans[i]); z++ {
+					if ans[i][z] == num {
+						step++
+					} else {
+						break
+					}
+				}
+				j += step
+				ans = append(ans, tmp)
+			}
+		}
+		ans = ans[ansLen:]
+	}
+
 	return ans
 }
 
