@@ -2,7 +2,7 @@
 leetcode算法题，go语言
 
 力扣字符串生成二叉树代码
-
+```
 func generateTree(str string) (root *TreeNode) {
 	s := strings.TrimLeft(str, "[")
 	s = strings.TrimRight(s, "]")
@@ -35,3 +35,4 @@ func generateTree(str string) (root *TreeNode) {
 	}
 	return
 }
+```
