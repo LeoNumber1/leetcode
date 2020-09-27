@@ -3,6 +3,12 @@ leetcode算法题，go语言
 
 力扣字符串生成二叉树代码
 ```
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
 func generateTree(str string) (root *TreeNode) {
 	s := strings.TrimLeft(str, "[")
 	s = strings.TrimRight(s, "]")
