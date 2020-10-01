@@ -99,7 +99,7 @@ func (s *Stack) Pop() *TreeNode {
 	return n
 }
 
-//深度优先，迭代2
+//广度优先，迭代2
 func preorderTraversal3(root *TreeNode) []int {
 	if root == nil {
 		return nil
