@@ -31,12 +31,12 @@ func printList(l *ListNode) {
 }
 
 type ListNode struct {
-	//Pre  *ListNode
 	Val  int
 	Next *ListNode
 }
 
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+//12 ms	4.9 MB
+func addTwoNumbers1(l1 *ListNode, l2 *ListNode) *ListNode {
 	if l1 == nil {
 		return l2
 	}
@@ -46,7 +46,6 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 
 	var res = new(ListNode)
 	r := res
-	//var isAddOne bool
 	var addRes int
 
 	for l1 != nil || l2 != nil || addRes > 0 {
@@ -63,24 +62,35 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 
 		r.Val = addRes % 10
 		addRes /= 10
-
-		//addRes := l1.Val + l2.Val
-		//if isAddOne {
-		//	addRes += 1
-		//}
-		//
-		////r := findLast(res)
-		//
-		//if addRes < 10 {
-		//	res.Val = addRes
-		//	isAddOne = false
-		//} else {
-		//	res.Val = addRes - 10
-		//	isAddOne = true
-		//}
-		//l1 = l1.Next
-		//l2 = l2.Next
 	}
 
 	return res.Next
+}
+
+//28 ms	5.2 MB
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	if l1 == nil && l2 == nil {
+		return nil
+	}
+	if l1 == nil {
+		return l2
+	}
+	if l2 == nil {
+		return l1
+	}
+
+	sum := l1.Val + l2.Val
+	nextNode := addTwoNumbers(l1.Next, l2.Next)
+	if sum < 10 {
+		return &ListNode{Val: sum, Next: nextNode}
+	} else {
+		tempNode := &ListNode{
+			Val:  1,
+			Next: nil,
+		}
+		return &ListNode{
+			Val:  sum - 10,
+			Next: addTwoNumbers(nextNode, tempNode),
+		}
+	}
 }

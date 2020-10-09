@@ -8,6 +8,7 @@ func main() {
 	fmt.Println(twoSum(nums, target))
 }
 
+//4 ms	3.7 MB
 func twoSum(nums []int, target int) []int {
 	m := map[int]int{}
 	for k, v := range nums {
