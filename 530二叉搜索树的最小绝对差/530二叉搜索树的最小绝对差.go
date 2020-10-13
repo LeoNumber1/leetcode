@@ -9,13 +9,14 @@ import (
 
 func main() {
 	root := generateTree("[1,null,3,2]")
-	root = generateTree("[236,104,701,null,227,null,911]")
-	root = generateTree("[0,null,2236,1277,2776,519]")
-	root = generateTree("[600,424,612,null,499,null,689]")
+	//root = generateTree("[236,104,701,null,227,null,911]")
+	//root = generateTree("[0,null,2236,1277,2776,519]")
+	//root = generateTree("[600,424,612,null,499,null,689]")
 	//root = generateTree("[3,null,9,4]")
 
 	//fmt.Println(getMinimumDifference(root))
-	fmt.Println(getMinimumDifferenceMorris(root))
+	//fmt.Println(getMinimumDifferenceMorris(root))
+	fmt.Println(getMinimumDifferenceOfficial(root))
 }
 
 //16 ms-43.45%	6.3 MB-63.03%
@@ -79,6 +80,26 @@ func getMinimumDifferenceMorris(node *TreeNode) int {
 		}
 	}
 
+	return ans
+}
+
+//16 ms-43.45%	6.5 MB-48.74%
+func getMinimumDifferenceOfficial(root *TreeNode) int {
+	var ans, pre = math.MaxInt32, -1
+	var f func(node *TreeNode)
+	f = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		f(node.Left)
+		tmp := node.Val - pre
+		if pre != -1 && tmp < ans {
+			ans = tmp
+		}
+		pre = node.Val
+		f(node.Right)
+	}
+	f(root)
 	return ans
 }
 
