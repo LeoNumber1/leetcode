@@ -25,7 +25,10 @@ func main() {
 
 func printList(l *ListNode) {
 	for l != nil {
-		fmt.Printf("%d->", l.Val)
+		fmt.Printf("%d", l.Val)
+		if l.Next != nil {
+			fmt.Print("->")
+		}
 		l = l.Next
 	}
 }

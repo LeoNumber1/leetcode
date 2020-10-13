@@ -41,4 +41,30 @@ func generateTree(str string) (root *TreeNode) {
 	}
 	return
 }
+
+//生成链表的代码
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func generateListNode(s string) (head *ListNode) {
+	s = strings.TrimLeft(s, "[")
+	s = strings.TrimRight(s, "]")
+	arr := strings.Split(s, ",")
+	if len(arr) == 0 || arr[0] == "null" {
+		return nil
+	}
+	head = new(ListNode)
+	node := head
+	for k, v := range arr {
+		node.Val, _ = strconv.Atoi(v)
+		if k != len(arr)-1 {
+			node.Next = new(ListNode)
+			node = node.Next
+		}
+	}
+	return
+}
 ```
