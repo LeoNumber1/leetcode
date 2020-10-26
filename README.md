@@ -67,4 +67,10 @@ func generateListNode(s string) (head *ListNode) {
 	}
 	return
 }
+
+//二维数组按照第0位排序
+
+sort.Slice(data, func(i, j int) bool {
+		return data[i][0] < data[j][0]
+	})
 ```
