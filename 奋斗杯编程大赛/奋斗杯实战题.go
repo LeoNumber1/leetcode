@@ -5,18 +5,18 @@ import "fmt"
 func main() {
 	//详细题目说明可见：https://blog.csdn.net/u012140251/article/details/109409015
 	//-2进制表示法
-	//n := -10
-	//intToNegativeBinary(n)
+	n := -3
+	intToNegativeBinary(n)
 	//intToNegativeBinary(1)
-	//for i := -10; i < 10; i++ {
+	//for i := -10; i < 11; i++ {
 	//	intToNegativeBinary(i)
 	//}
 
 	//详细题目说明可见：https://blog.csdn.net/u012140251/article/details/109410044
 	//跑步，走路不得分，慢跑得一倍分，快跑得两倍分，但下一段只能走路，求最大得分
 	//如4段，每段分值 1 2 3 4 ， 则最大得分为 1+2+3+4*2 = 14
-	fmt.Println(run([]int{1, 2, 3, 4}))
-	fmt.Println(runBetter([]int{1, 2, 3, 4}))
+	//fmt.Println(run([]int{1, 2, 3, 4}))
+	//fmt.Println(runBetter([]int{1, 2, 3, 4}))
 	//fmt.Println(run([]int{4, 3, 2, 1}))
 	//fmt.Println(runBetter([]int{4, 3, 2, 1}))
 	//fmt.Println(run([]int{4, 3, 1, 2}))
