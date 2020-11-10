@@ -73,4 +73,11 @@ func generateListNode(s string) (head *ListNode) {
 sort.Slice(data, func(i, j int) bool {
 		return data[i][0] < data[j][0]
 	})
+
+//先按照 cx<cy 排序，如果相等再按 x<y 排序
+sort.Slice(a, func(i, j int) bool {
+		x, y := a[i], a[j]
+		cx, cy := onesCount(x), onesCount(y)
+		return cx < cy || cx == cy && x < y
+	})
 ```
