@@ -68,6 +68,17 @@ func generateListNode(s string) (head *ListNode) {
 	return
 }
 
+//链表打印
+func printList(l *ListNode) {
+	for l != nil {
+		fmt.Print(l.Val)
+		if l.Next != nil {
+			fmt.Print("->")
+		}
+		l = l.Next
+	}
+}
+
 //二维数组按照第0位排序
 
 sort.Slice(data, func(i, j int) bool {
