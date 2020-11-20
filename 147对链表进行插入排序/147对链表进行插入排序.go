@@ -15,6 +15,7 @@ func main() {
 	printList(insertionSortListOfficial(head))
 }
 
+//28 ms-20.34%	3.2 MB-81.36%
 func insertionSortList(head *ListNode) *ListNode {
 	node := head
 	list := &ListNode{0, node}
@@ -42,6 +43,7 @@ out:
 	return list.Next
 }
 
+//4 ms-96.90%	3.2 MB-39.78%
 func insertionSortListOfficial(head *ListNode) *ListNode {
 	if head == nil {
 		return nil
