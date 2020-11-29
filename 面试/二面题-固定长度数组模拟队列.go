@@ -84,9 +84,9 @@ func testConcurrence() {
 const MAX = 10
 
 type Queue struct {
-	len        int
-	head, tail int
-	arr        [MAX]int
+	len        int      //队列长度
+	head, tail int      //头尾指针位置
+	arr        [MAX]int //实际队列元素存在的固定长度数组
 	//lock       sync.Mutex
 }
 
@@ -96,12 +96,12 @@ func (q *Queue) In(x int) error {
 	if q.len == MAX {
 		return errors.New("队列已满")
 	}
-	q.arr[q.tail] = x
-	q.tail++
-	if q.tail > MAX-1 {
+	q.arr[q.tail] = x   //入队将元素插入到队尾指针处
+	q.tail++            //队尾指针向后移位
+	if q.tail > MAX-1 { //如果队尾指针大于数组边界，则队尾指针指回0
 		q.tail = 0
 	}
-	q.len++
+	q.len++ //队列长度+1
 	return nil
 }
 
@@ -111,12 +111,12 @@ func (q *Queue) Out() (int, error) {
 	if q.len == 0 {
 		return 0, errors.New("队列已空")
 	}
-	x := q.arr[q.head]
-	q.head++
-	if q.head > MAX-1 {
+	x := q.arr[q.head]  //出队时将队头指针出位置元素出队
+	q.head++            //同时，对头指针向后移一位
+	if q.head > MAX-1 { //如果队头指针大于数组边界，则队头指针指回0
 		q.head = 0
 	}
-	q.len--
+	q.len-- //队列长度-1
 	return x, nil
 }
 
