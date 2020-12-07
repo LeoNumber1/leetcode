@@ -13,8 +13,10 @@ func main() {
 	//test1()
 	//test2()
 	//test3()
-	test4()
-	test5()
+	//test4()
+	//test5()
+	test6()
+	test7()
 }
 
 func test1() {
@@ -145,5 +147,74 @@ func test5() {
 		}
 	}(ctx)
 	//等待所有goroutine执行完成
+	wg.Wait()
+}
+
+func test6() {
+	var wg = sync.WaitGroup{}
+	wg.Add(2)
+	charCha := make(chan int, 1)
+	numCha := make(chan int, 1)
+	//end := make(chan int, 0)
+	numCha <- 1
+	go func() {
+		defer wg.Done()
+		for i := 0; i < 10; i++ {
+			<-charCha
+			fmt.Print(i + 1)
+			numCha <- 1
+		}
+		//end <- 1
+	}()
+
+	go func() {
+		defer wg.Done()
+		for i := 0; i < 10; i++ {
+			<-numCha
+			fmt.Print(string('A' + i))
+			charCha <- 1
+		}
+	}()
+
+	//<-end
+	wg.Wait()
+	return
+}
+
+func test7() {
+	wg := &sync.WaitGroup{}
+	wg.Add(1)
+	charChan := make(chan byte, 1)
+	numChan := make(chan int, 1)
+	var a byte
+	var b int
+	n := 20
+	i := 0
+	go func() {
+		defer wg.Done()
+		for {
+			select {
+			case a = <-charChan:
+				fmt.Print(string(a))
+				numChan <- int(a-'A') + 1
+				i++
+				//time.Sleep(time.Second)
+				if i >= n {
+					return
+				}
+			case b = <-numChan:
+				fmt.Print(b)
+				charChan <- byte('A' + b)
+				i++
+				//time.Sleep(time.Second)
+				if i >= n {
+					return
+				}
+			default:
+
+			}
+		}
+	}()
+	charChan <- 'A'
 	wg.Wait()
 }
