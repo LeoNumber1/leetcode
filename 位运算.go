@@ -31,4 +31,6 @@ func main() {
 	fmt.Println(8 & -8)            //找出最后一位1的二进制数，因为-a是以补码的形式储存
 	fmt.Println(math.Log2(8 & -8)) //最小的一位的下标,3
 	//	v&(v-1) 删除最后一位1
+
+	fmt.Println("===", 'a'^'a')
 }
