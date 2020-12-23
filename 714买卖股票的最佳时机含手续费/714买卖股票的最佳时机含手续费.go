@@ -6,13 +6,15 @@ func main() {
 	prices := []int{1, 3, 2, 8, 4, 9}
 	fee := 2
 
-	prices = []int{9, 8, 7, 1, 2}
-	fee = 3
+	//prices = []int{9, 8, 7, 1, 2}
+	//fee = 3
 
+	//fmt.Println(maxProfit0(prices, fee))
 	fmt.Println(maxProfit(prices, fee))
+	fmt.Println(maxProfitOfficial(prices, fee))
 }
 
-func maxProfit(prices []int, fee int) int {
+func maxProfit0(prices []int, fee int) int {
 	n := len(prices)
 	if n < 2 {
 		return 0
@@ -27,9 +29,38 @@ func maxProfit(prices []int, fee int) int {
 	return dp[n-1][0]
 }
 
+func maxProfit(prices []int, fee int) int {
+	n := len(prices)
+	if n < 2 {
+		return 0
+	}
+	dp0 := 0
+	dp1 := -prices[0]
+	for i := 1; i < n; i++ {
+		dp0 = max(dp0, prices[i]+dp1-fee)
+		dp1 = max(dp1, dp0-prices[i])
+	}
+	return dp0
+}
+
 func max(a, b int) int {
 	if a > b {
 		return a
 	}
 	return b
+}
+
+func maxProfitOfficial(prices []int, fee int) int {
+	n := len(prices)
+	buy := prices[0] + fee
+	profit := 0
+	for i := 1; i < n; i++ {
+		if prices[i]+fee < buy {
+			buy = prices[i] + fee
+		} else if prices[i] > buy {
+			profit += prices[i] - buy
+			buy = prices[i]
+		}
+	}
+	return profit
 }
