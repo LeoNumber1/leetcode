@@ -127,6 +127,23 @@ str2matrix := func(s string) (matrix [][]int) {
     return
 }
 
+arr2str := func(arr []int) string {
+		n := len(arr)
+		if n == 0 {
+			return "[]"
+		}
+		s := "["
+		for k, v := range arr {
+			s += strconv.Itoa(v)
+			if k < n-1 {
+				s += ","
+			} else {
+				s += "]"
+			}
+		}
+		return s
+	}
+
 var errNum bool
 for _, tt := range tests {
     result := makeConnected(tt.args.n, str2matrix(tt.args.connections))
