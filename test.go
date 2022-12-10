@@ -1,11 +1,17 @@
 package main
 
 import (
+	"crypto/rand"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"os"
 	"os/signal"
+	"regexp"
 	"syscall"
 	"time"
+
+	"github.com/cheggaaa/pb/v3"
 )
 
 type Member struct {
@@ -13,6 +19,10 @@ type Member struct {
 }
 
 func main() {
+	pbTest()
+	//pbTest1()
+	//regTest()
+	return
 	//testSlice()
 	go dealSignal()
 	exited := make(chan struct{}, 1)
@@ -31,6 +41,52 @@ Loop:
 		}
 	}
 	fmt.Println("main exit end")
+}
+
+func pbTest() {
+	count := 100000
+	// create and start new bar
+	//bar := pb.StartNew(count)
+
+	// start bar from 'default' template
+	//bar := pb.Default.Start(count)
+
+	// start bar from 'simple' template
+	//bar := pb.Simple.Start(count)
+
+	// start bar from 'full' template
+	bar := pb.Full.Start(count)
+
+	for i := 0; i < count; i++ {
+		bar.Increment()
+		time.Sleep(time.Millisecond)
+	}
+	bar.Finish()
+}
+
+func pbTest1() {
+	var limit int64 = 1024 * 1024 * 1024 * 5
+	// we will copy 200 Mb from /dev/rand to /dev/null
+	reader := io.LimitReader(rand.Reader, limit)
+	writer := ioutil.Discard
+
+	// start new bar
+	bar := pb.Full.Start64(limit)
+	// create proxy reader
+	barReader := bar.NewProxyReader(reader)
+	// copy from proxy reader
+	io.Copy(writer, barReader)
+	// finish bar
+	bar.Finish()
+}
+
+func regTest() {
+	str := "123sino123"
+	str1 := "123SiNo123"
+	matched, err := regexp.MatchString("(?is)sino", str)
+	fmt.Println(matched, err)
+	matched, err = regexp.MatchString("(?is)sino", str1)
+	fmt.Println(matched, err)
 }
 
 func testSlice() {
